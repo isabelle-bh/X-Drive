@@ -1,5 +1,9 @@
 // schema for x tronics CRM 
 
+datasource db {
+    provider = "postgresql"
+}
+
 model Contact {
     id  String @id @default(cuid())
     name    String
