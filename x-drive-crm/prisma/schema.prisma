@@ -4,6 +4,34 @@ datasource db {
     provider = "postgresql"
 }
 
+model User {
+    id  String @id @default(cuid())
+    name    String
+    email   String @unique
+    role    Role @default(USER)
+    createdAt   DateTime @default(now())
+
+    contacts    Contact[]
+    organizations   Organization[]
+    opportunities   Opportunity[]
+}
+
+model Invitation {
+    id String @id @default(cuid())
+    email   String
+    token   String @unique
+    role    Role @default(USER)
+    accepted    Boolean @default(false)
+    expiresAt   DateTime 
+}
+
+// enum: a field that can only be one of a fixed set of values
+enum Role {
+    ADMIN
+    USER
+}
+
+
 model Contact {
     id  String @id @default(cuid())
     name    String
@@ -15,6 +43,10 @@ model Contact {
     organization    Organization @relation(fields: [organizationId], references: [id])
 
     opportunities Opportunity[]
+
+    ownerId  String
+    owner    User @relation(fields: [ownerId], references: [id])
+    
 }
 
 model Organization {
@@ -26,6 +58,10 @@ model Organization {
 
     contacts    Contact[]
     opportunities Opportunity[]
+
+    ownerId  String
+    owner    User @relation(fields: [ownerId], references: [id])
+    
 }
 
 model Opportunity {
@@ -39,5 +75,8 @@ model Opportunity {
 
     organizationId  String
     organization    Organization @relation(fields: [organizationId], references: [id])
+
+    ownerId  String
+    owner    User @relation(fields: [ownerId], references: [id])
     
 }
