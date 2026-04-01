@@ -1,12 +1,17 @@
 // schema for x tronics CRM 
 
+generator client {
+    provider = "prisma-client-js"
+}
+
 datasource db {
     provider = "postgresql"
 }
 
 model User {
     id  String @id @default(cuid())
-    name    String
+    firstName    String
+    lastName    String
     email   String @unique
     role    Role @default(USER)
     createdAt   DateTime @default(now())
@@ -34,7 +39,8 @@ enum Role {
 
 model Contact {
     id  String @id @default(cuid())
-    name    String
+    firstName    String
+    lastName    String?
     email   String
     phone   String?
     title   String?
