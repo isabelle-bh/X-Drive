@@ -28,17 +28,17 @@ export async function GET() {
 export async function POST(req: Request) {
     const userId = "temp-user-id";
 
-    const body = await req.json();
+    const formData = await req.formData();
     
     const contact = await prisma.contact.create({
         data: {
-            firstName: body.firstName,
-            lastName: body.lastName || null,
-            email: body.email,
-            phone: body.phone || null,
-            title: body.title || null,
+            firstName: formData.get("firstName") as string,
+            lastName: formData.get("lastName") as string,
+            email: formData.get("email") as string,
+            phone: formData.get("phone") as string,
+            title: formData.get("title") as string,
+            organizationId: formData.get("organizationId") as string,
             ownerId: userId,
-            organizationId: body.organizationId
         },
     });  
 

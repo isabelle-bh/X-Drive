@@ -35,14 +35,14 @@ export async function GET() {
 export async function POST(req: Request) {
     const userId = "temp-user-id";
 
-    const body = await req.json();
+    const formData = await req.formData();
     
     const organization = await prisma.organization.create({
         data: {
-            name: body.name,
-            address: body.address,
-            website: body.website,
-            phone: body.phone,
+            name: formData.get("name") as string,
+            address: formData.get("address") as string,
+            website: formData.get("website") as string,
+            phone: formData.get("phone") as string,
             ownerId: userId,
         },
     });  

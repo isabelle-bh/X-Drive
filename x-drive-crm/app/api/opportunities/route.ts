@@ -12,6 +12,12 @@ export async function GET() {
             ownerId: userId 
         },
         include: { 
+            lead: {
+                select: {
+                    id: true,
+                    title: true,
+                }
+            },
             organization: {
                 select: {
                     id: true,
@@ -35,16 +41,16 @@ export async function GET() {
 export async function POST(req: Request) {
     const userId = "temp-user-id";
 
-    const body = await req.json();
+    const formData = await req.formData();
     
     const opportunity = await prisma.opportunity.create({
         data: {
-            title: body.title,
-            value: body.value || null,
-            stage: body.stage,
+            title: formData.get("title") as string,
+            value: Number(formData.get("value")),
+            stage: formData.get("stage") as string,
+            organizationId: formData.get("organizationId") as string,
+            contactId: formData.get("contactId") as string,
             ownerId: userId,
-            organizationId: body.organizationId,
-            contactId: body.contactId
         },
     });  
 
