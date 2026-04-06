@@ -13,19 +13,22 @@ model User {
     firstName    String
     lastName    String
     email   String @unique
+    password    String ? // hashed
+    isActive    Boolean @default(false) // has set password? 
     role    Role @default(USER)
     createdAt   DateTime @default(now())
 
-    contacts    Contact[]
+    contacts        Contact[]
     organizations   Organization[]
+    leads           Lead[]
     opportunities   Opportunity[]
 }
 
 model Invitation {
-    id String @id @default(cuid())
-    email   String
-    token   String @unique
-    role    Role @default(USER)
+    id          String @id @default(cuid())
+    email       String
+    token       String @unique
+    role        Role @default(USER)
     accepted    Boolean @default(false)
     expiresAt   DateTime 
 }
@@ -38,17 +41,18 @@ enum Role {
 
 
 model Contact {
-    id  String @id @default(cuid())
-    firstName    String
+    id          String @id @default(cuid())
+    firstName   String
     lastName    String?
-    email   String
-    phone   String?
-    title   String?
+    email       String
+    phone       String?
+    title       String?
 
     organizationId  String
     organization    Organization @relation(fields: [organizationId], references: [id])
 
-    opportunities Opportunity[]
+    leads           Lead[]
+    opportunities   Opportunity[]
 
     ownerId  String
     owner    User @relation(fields: [ownerId], references: [id])
@@ -56,22 +60,37 @@ model Contact {
 }
 
 model Organization {
-    id String @id @default(cuid())
+    id      String @id @default(cuid())
     name    String
     address String
     website String
     phone   String
 
-    contacts    Contact[]
-    opportunities Opportunity[]
+    contacts        Contact[]
+    opportunities   Opportunity[]
 
     ownerId  String
     owner    User @relation(fields: [ownerId], references: [id])
     
 }
 
+model Lead {
+    id          String @id @default(cuid())
+    title       String
+    interest    String?
+
+    opportunity Opportunity[]
+
+    contactId   String
+    contact     Contact @relation(fields: [contactId], references: [id])
+
+    ownerId     String
+    owner       User @relation(fields: [ownerId], references: [id])
+
+}
+
 model Opportunity {
-    id  String @id @default(cuid())
+    id      String @id @default(cuid())
     title   String
     value   Float?
     stage   String // will be changed to stage table later so we can reorder columns and customize pipeline nicely
@@ -81,6 +100,9 @@ model Opportunity {
 
     organizationId  String
     organization    Organization @relation(fields: [organizationId], references: [id])
+
+    leadId  String
+    lead    Lead @relation(fields: [leadId], references: [id])
 
     ownerId  String
     owner    User @relation(fields: [ownerId], references: [id])
