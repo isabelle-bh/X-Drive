@@ -6,10 +6,10 @@ This is a simple, custom CRM for X Tronics Inc.
 - 
 
 ## tools used:
-**Languages:** Typescript, Typescript-JSX, CSS
-**Framework:** Next.js (React UI, Node.js runtime on server)
-**Database:** PostgreSQL (hosted on Railway)
-**ORM:** Prisma (to map db -> JS objects)
+**Languages:** Typescript, Typescript-JSX, CSS <br>
+**Framework:** Next.js (React UI, Node.js runtime on server) <br>
+**Database:** PostgreSQL (hosted on Railway) <br>
+**ORM:** Prisma (to map db -> JS objects) <br>
 
 ## setup: 
 
@@ -17,11 +17,11 @@ This is a simple, custom CRM for X Tronics Inc.
 `npm install`
 
 ### environment variables:
-Place .env file inside x-drive-crm with following variables:
+Place .env file inside x-drive-crm with following variables:<br>
 `DATABASE_URL`
 
 ### run database
-`npx prisma migrate dev`
+`npx prisma migrate dev`<br>
 `npx prisma generate`
 
 ### start dev server
