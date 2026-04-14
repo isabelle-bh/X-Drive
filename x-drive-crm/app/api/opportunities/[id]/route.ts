@@ -53,7 +53,7 @@ export async function DELETE(
     req: Request,
     { params }: { params: { id: string }}
 ) {
-    const opportunity = await prisma.opportunity.delete({
+    await prisma.opportunity.delete({
         where: {
             id: params.id,
         }

@@ -39,7 +39,7 @@ export async function DELETE(
     req: Request,
     { params }: { params: { id: string }}
 ) {
-    const organization = await prisma.organization.delete({
+    await prisma.organization.delete({
         where: {
             id: params.id,
         }

@@ -47,7 +47,7 @@ export async function DELETE(
     req: Request,
     { params }: { params: { id: string }}
 ) {
-    const contact = await prisma.contact.delete({
+    await prisma.contact.delete({
         where: {
             id: params.id,
         }
