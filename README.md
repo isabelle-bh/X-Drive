@@ -1,9 +1,8 @@
 This is a simple, custom CRM for X Tronics Inc. 
 
 ## roadmap:
-- 
+- User permission assignment
 - Email syncing (POP3)
-- 
 
 ## tools used:
 **Languages:** Typescript, Typescript-JSX, CSS <br>
