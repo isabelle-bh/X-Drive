@@ -11,9 +11,7 @@ export default function SetPasswordPage() {
         const res = await fetch("/api/auth/set-password", {
             method: "POST",
             body: JSON.stringify({ password }),
-        });
-
-        
+        });   
     }
 
 }
