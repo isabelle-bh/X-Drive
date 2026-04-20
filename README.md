@@ -1,4 +1,4 @@
-This is a simple, custom CRM for X Tronics Inc. 
+X Drive is a simple, custom CRM. Features include tracking for contacts, organizations, leads, and opportunities, includes user account management (login, user sessions, admin vs user roles, permissions, etc).
 
 ## roadmap:
 - User permission assignment
