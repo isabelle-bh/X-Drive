@@ -2,13 +2,13 @@ import { prisma } from "@/lib/prisma"
 import { getCurrentUser } from "@/lib/auth"
 import { redirect } from "next/navigation"
 
-export default async function ContactsPage() {
+export default async function OpportunitiesPage() {
     const user = await getCurrentUser();
     if (!user) {
         redirect("/auth/login")
     }
 
-    const contacts = await prisma.contact.findMany({
+    const opportunities = await prisma.opportunity.findMany({
         include: { 
             organization: true,
         }
@@ -18,7 +18,7 @@ export default async function ContactsPage() {
 
     return(
         <div>
-            <h1>Contacts</h1>
+            <h1>Opportunities</h1>
 
             <table>
                 <thead>
@@ -30,22 +30,15 @@ export default async function ContactsPage() {
                 </thead>
 
                 <tbody>
-                    {contacts.map((contact) => (
-                        <tr key={contact.id}>
-                            <td>{contact.firstName} {contact.lastName}</td>
-                            <td>{contact.email}</td>
-                            <td>{contact.organization?.name || "-"}</td>
+                    {opportunities.map((opportunity) => (
+                        <tr key={opportunity.id}>
+                            <td>{opportunity.organization?.name || "-"}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
-            <form method="POST" action="/api/contacts">
-                <input name="firstName" placeholder="First Name" />
-                <input name="lastName" placeholder="Last Name"/>
-                <input name="email" placeholder="Email" />
-                <input name="phone" placeholder="Phone" />
-                <input name="title" placeholder="Title" />
+            <form method="POST" action="/api/opportunity">
                 <select name="organizationId">
                     <option value="">Select Organization</option>
                     {organizations.map((organization) => (

@@ -1,6 +1,13 @@
 import { prisma } from "@/lib/prisma"
+import { getCurrentUser } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 export default async function OrganizationsPage() {
+    const user = await getCurrentUser();
+    if (!user) {
+        redirect("/auth/login")
+    }
+
     const organizations = await prisma.organization.findMany(); 
 
     return(
