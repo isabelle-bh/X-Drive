@@ -15,10 +15,17 @@ export default function LoginPage() {
             body: JSON.stringify({email, password}),
         });
 
-        if (res.status === 401) {
-            alert("invalid login");
+        const data = await res.json();
+
+        if (!res.ok) {
+            if (data.message === "Password not set yet") {
+                window.location.href="/auth/set-password";
+            }
+            alert(data.message);
+            return data.message;
         } else {
-            window.location.href="/dashboard"
+            window.location.href="/dashboard";
+            alert(data.message);
         }
     }
 

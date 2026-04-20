@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react";
-import { newPasswordValid } from "@/lib/auth"
 
 export default function SetPasswordPage() {
     const [password, setPassword] = useState("");
@@ -9,17 +8,18 @@ export default function SetPasswordPage() {
     async function handleSetPassword(e: any) {
         e.preventDefault();
 
-        if (newPasswordValid(password)) {
-            const res = await fetch("/api/auth/set-password", {
-                method: "POST",
-                body: JSON.stringify({ password }),
-            });
-            if (res.status === 200) {
-                alert("New password set successfully!");
-                window.location.href="/dashboard"
-            }
+        const res = await fetch("/api/auth/set-password", {
+            method: "POST",
+            body: JSON.stringify({ password }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            alert("New password set successfully!");
+            window.location.href="/dashboard"
         } else {
-            alert("Error: Password must be at least 8 characters long!");
+            alert(data.message);
         }
     }
     
